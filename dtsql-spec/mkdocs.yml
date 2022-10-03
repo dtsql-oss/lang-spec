@@ -1,0 +1,122 @@
+# config docs: https://www.mkdocs.org/user-guide/configuration/
+
+site_name: DTSQL Documentation
+site_url: https://example.com/
+site_author: Raffael Foidl
+site_description: >-
+  Documentation and specification of DTSQL (Declarative Time Series Description Language).
+  Contains a definition of the syntax and semantics of its language concepts as well as meta-information regarding its data model and how to supply data to an DTSQL implementation. 
+
+repo_url: https://github.com/dtsql-oss/lang-spec
+repo_name: GitHub
+edit_uri: "" # comment out this line to display an edit icon at the top of each page that points to the GitHub URL of the same page
+copyright: Copyright &copy; 2022 - 2023 Raffael Foidl
+
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+strict: false
+dev_addr: 127.0.0.1:8000
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/dtsql-oss/lang-spec
+
+theme:
+  name: material # docs: https://squidfunk.github.io/mkdocs-material/reference/
+  language: en
+  features:
+    - navigation.instant # SPA behaviour
+    - navigation.tabs # render top-level sections in a top navigation menu layer
+    - navigation.sections # render first nested navigation hierarchy level (level 2 with navigation.tabs enabled) as groups in the sidebar
+    - navigation.indexes # first section level may contain document (for overview pages)
+    - navigation.top # back-to-top button
+    #- navigation.tabs.sticky # sticky top-level sections
+    #- navigation.tracking # update URL with active anchor as highlighted in TOC
+  palette:
+    # palette for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/brightness-6
+        name: Switch theme
+
+    # palette for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/brightness-6
+        name: Switch theme
+  font: # TODO: GDPR issues with Google Fonts? self-host using https://google-webfonts-helper.herokuapp.com/?
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/images/favicon.png
+  logo: assets/images/logo.png
+
+nav:
+  - 'Getting Started': index.md
+  - 'Language Specification':
+      - 'DTSQL Query Overview': query-language/overview.md
+      - 'Samples': query-language/samples.md
+      - 'Filters': query-language/filters.md
+      - 'Events': query-language/events.md
+      - 'Selection': query-language/selection.md
+      - 'Yield': query-language/yield.md
+  - 'Data Structures': data-structures/data-structures.md
+  - 'Query API':
+          - 'Query API Overview': query-api/query-api-overview.md
+          - 'Supported Storage Mechanisms':
+            - 'CSV Storage Service': query-api/storage-mechanisms/csv.md
+            - 'InfluxDB Storage Service': query-api/storage-mechanisms/influxdb.md
+
+extra_css:
+  - css/extra.css
+
+extra_javascript:
+  # for math rendering, this is the "vanilla" way of embedding MathJax (should work for every theme), the docs
+  # of the "material" theme describe another way of allowing LaTeX math to be rendered, but may not work everywhere
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - js/tablesort.js
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - toc:
+      permalink: "#"
+  - md_in_html
+  - mdx_math:
+      enable_dollar_delimiter: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify # sponsors only at the moment; content tab anchors will appear on site with public release of this feature (https://squidfunk.github.io/mkdocs-material/reference/content-tabs/#anchor-links)
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: false
+      clickable_checkbox: false
+  - sane_lists
+  - smarty:
+      smart_quotes: true
+      smart_dashes: true
+      smart_angled_quotes: true
+      smart_ellipses: true
+  - tables
+
+# plugins: https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins
